@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HolyDev — Holy Miradi Kinguma, Développeur</title>
+<meta name="description" content="Portfolio de Holy Miradi Kinguma (HolyDev), développeur — projets, compétences et contact.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+
+  /* ---------- Tokens ---------- */
+  :root{
+    --paper: #F3F6FA;
+    --ink: #0E1621;
+    --ink-soft: #52657A;
+    --blueprint: #1E73B8;
+    --blueprint-soft: #DCEBF7;
+    --accent: #0EA5C4;
+    --grid-line: rgba(14,22,33,0.035);
+    --rule: rgba(14,22,33,0.13);
+    --surface: #FFFFFF;
+
+    --font-display: 'Space Grotesk', 'Helvetica Neue', Arial, sans-serif;
+    --font-body: 'Lora', Georgia, 'Times New Roman', serif;
+
+    --max: 1040px;
+
+    /* Bandeaux haut (hero) et bas (contact) : navy quasi-noir en thème clair */
+    --band-bg: #080D15;
+    --band-text: #F3F6FA;
+    --band-accent: #22D3EE;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper: #0B111A;
+      --ink: #E7EEF5;
+      --ink-soft: #8FA1B5;
+      --blueprint: #5FC1E8;
+      --blueprint-soft: #142433;
+      --accent: #22D3EE;
+      --grid-line: rgba(231,238,245,0.05);
+      --rule: rgba(231,238,245,0.14);
+      --surface: #121B27;
+      --band-bg: #0EA5C4;
+      --band-text: #04141A;
+      --band-accent: #04141A;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper: #0B111A;
+    --ink: #E7EEF5;
+    --ink-soft: #8FA1B5;
+    --blueprint: #5FC1E8;
+    --blueprint-soft: #142433;
+    --accent: #22D3EE;
+    --grid-line: rgba(231,238,245,0.05);
+    --rule: rgba(231,238,245,0.14);
+    --surface: #121B27;
+    --band-bg: #0EA5C4;
+    --band-text: #04141A;
+    --band-accent: #04141A;
+  }
+
+  /* ---------- Reset ---------- */
+  *,*::before,*::after{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior: auto; }
+    *,*::before,*::after{ animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+  }
+  body{
+    margin:0;
+    background-color: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 17px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  img,svg{ max-width:100%; display:block; }
+  a{ color: inherit; }
+  a:focus-visible, button:focus-visible{ outline: 2px solid var(--accent); outline-offset: 3px; }
+  h1,h2,h3{ font-family: var(--font-display); margin:0; font-weight: 600; letter-spacing: -0.01em; }
+  p{ margin:0; }
+  ul{ margin:0; padding:0; list-style:none; }
+
+  .wrap{ max-width: var(--max); margin: 0 auto; padding: 0 28px; }
+  .prose{ max-width: 62ch; }
+
+  /* ---------- Nav ---------- */
+  header{
+    position: sticky; top:0; z-index: 20;
+    background: color-mix(in srgb, var(--paper) 88%, transparent);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--rule);
+  }
+  .nav{ display:flex; align-items:center; justify-content:space-between; padding: 18px 28px; }
+  .nav__mark{ font-family: var(--font-display); font-weight:700; font-size: 1.05rem; text-decoration:none; display:flex; align-items:center; gap:8px;}
+  .nav__mark svg{ width:20px; height:20px; }
+  .nav__links{ display:flex; align-items:center; gap: 26px; }
+  .nav__right{ display:flex; align-items:center; gap: 18px; }
+  .nav__links a{ text-decoration:none; font-size: 0.95rem; color: var(--ink-soft); transition: color .15s ease; }
+  .nav__links a:hover{ color: var(--ink); }
+  .status{
+    display:flex; align-items:center; gap:7px; font-size: 0.85rem; color: var(--ink-soft);
+    border:1px solid var(--rule); padding: 5px 12px 5px 10px; border-radius: 3px;
+  }
+  .status__dot{ width:7px; height:7px; border-radius:50%; background: var(--accent); flex:none; }
+  .theme-toggle{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:34px; height:34px; border:1px solid var(--rule); border-radius:50%;
+    background:none; cursor:pointer; color: var(--ink); flex:none;
+    transition: border-color .15s ease, transform .15s ease;
+  }
+  .theme-toggle:hover{ border-color: var(--blueprint); transform: translateY(-1px); }
+  .theme-toggle svg{ width:16px; height:16px; }
+  .theme-toggle .icon-moon{ display:none; }
+  :root[data-theme="dark"] .theme-toggle .icon-sun{ display:none; }
+  :root[data-theme="dark"] .theme-toggle .icon-moon{ display:block; }
+
+  .nav__toggle{ display:none; background:none; border:1px solid var(--rule); border-radius:3px; padding:7px 10px; cursor:pointer; }
+  .nav__toggle span, .nav__toggle span::before, .nav__toggle span::after{
+    display:block; width:18px; height:1.5px; background: var(--ink); position:relative; transition: transform .2s ease;
+  }
+  .nav__toggle span::before, .nav__toggle span::after{ content:""; position:absolute; left:0; }
+  .nav__toggle span::before{ top:-6px; } .nav__toggle span::after{ top:6px; }
+
+  @media (max-width: 760px){
+    .nav__links{
+      position:absolute; top:100%; left:0; right:0; flex-direction:column; align-items:flex-start;
+      background: var(--paper); border-bottom:1px solid var(--rule); padding: 18px 28px 24px; gap:16px;
+      display:none;
+    }
+    .nav__links.is-open{ display:flex; }
+    .nav__toggle{ display:block; }
+    .status{ order:3; }
+  }
+
+  /* ---------- Section rhythm ---------- */
+  section{ padding: 88px 0; }
+  .tick-rule{
+    height: 14px; margin: 0 0 44px;
+    background-image:
+      linear-gradient(var(--rule), var(--rule)),
+      repeating-linear-gradient(to right, var(--rule) 0, var(--rule) 1px, transparent 1px, transparent 26px);
+    background-position: bottom, bottom;
+    background-size: 100% 1px, auto 6px;
+    background-repeat: no-repeat, repeat-x;
+  }
+  .kicker-num{ font-family: var(--font-display); font-size: 0.8rem; color: var(--blueprint); }
+
+  /* ---------- Hero (bandeau haut) ---------- */
+  .hero{
+    position:relative; padding: 100px 0 90px; overflow:hidden;
+    background: var(--band-bg); color: var(--band-text);
+    --ink: var(--band-text);
+    --ink-soft: color-mix(in srgb, var(--band-text) 68%, transparent);
+    --rule: color-mix(in srgb, var(--band-text) 24%, transparent);
+    --blueprint: var(--band-accent);
+  }
+  .hero .wrap{ display:grid; grid-template-columns: 1.35fr 0.65fr; gap: 48px; align-items:center; }
+  .hero__frame{ position:relative; padding: 8px; }
+  .crosshair{ position:absolute; width:18px; height:18px; opacity:.55; }
+  .crosshair line{ stroke: var(--blueprint); stroke-width:1; }
+  .crosshair--tl{ top:0; left:0; } .crosshair--tr{ top:0; right:0; }
+  .crosshair--bl{ bottom:0; left:0; } .crosshair--br{ bottom:0; right:0; }
+
+  .hero__eyebrow{ font-family: var(--font-display); font-size: 0.9rem; color: var(--blueprint); margin-bottom: 18px; }
+  .hero h1{
+    font-size: clamp(2.3rem, 4.8vw, 3.8rem); line-height: 1.06; max-width: 15ch;
+  }
+  .hero__role{ font-family: var(--font-body); font-style: italic; color: var(--ink-soft); font-size: 1.2rem; margin-top: 18px; max-width: 46ch; }
+  .hero__lede{ margin-top: 24px; font-size: 1.05rem; color: var(--ink-soft); max-width: 56ch; }
+  .hero__cta{ display:flex; gap:16px; margin-top: 36px; flex-wrap:wrap; }
+
+  /* Emplacement photo de profil */
+  .hero__photo{ display:flex; flex-direction:column; align-items:center; justify-self:center; }
+  .hero__avatar{
+    position:relative; width: 190px; height:190px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    background: color-mix(in srgb, var(--band-text) 8%, transparent);
+    border: 1.5px dashed var(--rule);
+    font-family: var(--font-display); font-weight:700; font-size: 2.4rem; letter-spacing:.02em;
+    color: var(--band-accent);
+  }
+  .hero__avatar-badge{
+    position:absolute; right:2px; bottom:2px; width:38px; height:38px; border-radius:50%;
+    background: var(--band-accent); color: var(--band-bg);
+    display:flex; align-items:center; justify-content:center;
+    border: 3px solid var(--band-bg);
+  }
+  .hero__avatar-badge svg{ width:18px; height:18px; }
+  .hero__photo-hint{ margin-top: 14px; font-size: 0.8rem; color: var(--ink-soft); text-align:center; max-width: 190px; }
+  @media (max-width: 760px){
+    .hero .wrap{ grid-template-columns: 1fr; text-align:center; }
+    .hero__photo{ order:-1; }
+    .hero__eyebrow, .hero__role, .hero__lede{ margin-left:auto; margin-right:auto; }
+    .hero__cta{ justify-content:center; }
+  }
+
+  .btn{
+    font-family: var(--font-display); font-size: 0.95rem; text-decoration:none;
+    padding: 13px 24px; border-radius: 3px; display:inline-block; transition: transform .15s ease, background .15s ease;
+  }
+  .hero .btn--primary{ background: var(--band-accent); color: var(--band-bg); }
+  .hero .btn--primary:hover{ transform: translateY(-1px); }
+  .hero .btn--ghost{ border: 1px solid var(--rule); color: var(--band-text); }
+  .hero .btn--ghost:hover{ border-color: var(--band-accent); }
+
+  @media (prefers-reduced-motion: no-preference){
+    .hero__eyebrow,.hero h1,.hero__role,.hero__lede,.hero__cta{
+      animation: rise .7s cubic-bezier(.2,.7,.2,1) both;
+    }
+    .hero h1{ animation-delay: .05s; }
+    .hero__role{ animation-delay: .12s; }
+    .hero__lede{ animation-delay: .18s; }
+    .hero__cta{ animation-delay: .26s; }
+  }
+  @keyframes rise{ from{ opacity:0; transform: translateY(14px);} to{ opacity:1; transform:none; } }
+
+  /* ---------- À propos ---------- */
+  .about{ display:grid; grid-template-columns: 1.1fr 0.9fr; gap: 64px; align-items:start; }
+  .about h2{ font-size: 2rem; margin-bottom: 22px; }
+  .about p + p{ margin-top: 16px; }
+  .about__facts{ border-top: 1px solid var(--rule); }
+  .about__fact{ display:flex; justify-content:space-between; gap: 20px; padding: 14px 0; border-bottom: 1px solid var(--rule); font-size: 0.95rem; }
+  .about__fact dt{ color: var(--ink-soft); }
+  .about__fact dd{ margin:0; font-family: var(--font-display); font-size:0.9rem; text-align:right; }
+  @media (max-width: 800px){ .about{ grid-template-columns: 1fr; } }
+
+  /* ---------- Avantages ---------- */
+  .advantages h2{ font-size: 2rem; max-width: 18ch; }
+  .advantages__intro{ margin-top:16px; color: var(--ink-soft); max-width: 60ch; }
+  .advantages__grid{ margin-top: 50px; display:grid; grid-template-columns: repeat(2,1fr); }
+  .advantage{ padding: 30px 30px 30px 0; border-top: 1px solid var(--rule); }
+  .advantage:nth-child(2n){ padding-left: 30px; padding-right:0; }
+  .advantage:nth-last-child(-n+2){ border-bottom: 1px solid var(--rule); }
+  .advantage__num{ font-family: var(--font-display); color: var(--blueprint); font-size: 0.85rem; }
+  .advantage h3{ font-size: 1.2rem; margin-top: 10px; }
+  .advantage p{ margin-top: 10px; color: var(--ink-soft); font-size: 0.98rem; }
+  @media (max-width: 760px){
+    .advantages__grid{ grid-template-columns: 1fr; }
+    .advantage, .advantage:nth-child(2n){ padding: 26px 0; }
+  }
+
+  /* ---------- Compétences ---------- */
+  .skills__grid{ display:grid; grid-template-columns: repeat(3,1fr); gap: 40px; margin-top: 44px; }
+  .skills__group h3{ font-size: 1rem; color: var(--blueprint); font-weight:600; }
+  .skills__group ul{ margin-top: 16px; }
+  .skills__group li{ padding: 8px 0; border-bottom: 1px solid var(--rule); font-size: 0.98rem; }
+  @media (max-width: 760px){ .skills__grid{ grid-template-columns: 1fr; gap: 30px; } }
+
+  /* ---------- Projets ---------- */
+  .projects h2{ font-size: 2rem; }
+  .projects__intro{ margin-top:16px; color: var(--ink-soft); max-width: 60ch; }
+  .projects__list{ margin-top: 50px; display:flex; flex-direction:column; }
+  .project{
+    display:grid; grid-template-columns: 240px 1fr; gap: 40px; align-items:center;
+    padding: 40px 0; border-top: 1px solid var(--rule);
+  }
+  .projects__list .project:last-child{ border-bottom: 1px solid var(--rule); }
+  .project__art{ background: var(--surface); border:1px solid var(--rule); border-radius: 4px; padding: 18px; }
+  .project__art svg{ stroke: var(--blueprint); }
+  .project__title{ font-size: 1.35rem; }
+  .project__desc{ margin-top: 10px; color: var(--ink-soft); max-width: 56ch; }
+  .project__meta{ margin-top: 16px; font-family: var(--font-display); font-size: 0.85rem; color: var(--ink-soft); }
+  .project__link{ margin-top: 16px; display:inline-flex; font-family: var(--font-display); font-size: 0.9rem; text-decoration:none; border-bottom: 1px solid var(--ink); padding-bottom: 2px; }
+  @media (max-width: 700px){ .project{ grid-template-columns: 1fr; } }
+
+  /* ---------- Contact (bandeau bas) ---------- */
+  .contact{
+    text-align:left;
+    background: var(--band-bg); color: var(--band-text);
+    --ink: var(--band-text);
+    --ink-soft: color-mix(in srgb, var(--band-text) 68%, transparent);
+    --rule: color-mix(in srgb, var(--band-text) 24%, transparent);
+    --blueprint: var(--band-accent);
+  }
+  .contact h2{ font-size: 2.2rem; max-width: 16ch; }
+  .contact p{ margin-top: 18px; color: var(--ink-soft); max-width: 54ch; }
+  .contact__email{
+    font-family: var(--font-display); font-size: clamp(1.4rem, 3.6vw, 2.1rem);
+    text-decoration:none; display:inline-flex; align-items:center; gap:14px; margin-top: 34px; border-bottom: 2px solid var(--band-accent); padding-bottom: 6px;
+  }
+  .contact__email svg{ width:26px; height:26px; flex:none; }
+  .contact__links{ margin-top: 34px; display:flex; gap: 26px; flex-wrap:wrap; }
+  .contact__links a{ text-decoration:none; color: var(--ink-soft); font-size:0.95rem; display:inline-flex; align-items:center; gap:8px; }
+  .contact__links a svg{ width:17px; height:17px; flex:none; }
+  .contact__links a:hover{ color: var(--ink); }
+
+  footer{ padding: 34px 0 50px; border-top: 1px solid var(--rule); background: var(--band-bg); color: var(--ink-soft);
+    --ink-soft: color-mix(in srgb, var(--band-text) 68%, transparent);
+    --rule: color-mix(in srgb, var(--band-text) 24%, transparent);
+  }
+  .footer__row{ display:flex; justify-content:space-between; align-items:center; font-size: 0.85rem; flex-wrap:wrap; gap:10px; }
+
+
+  /* ---------- Orbes flous en arrière-plan ---------- */
+  .orbs{ position:fixed; inset:0; z-index:-1; overflow:hidden; pointer-events:none; }
+  .orb, .hero::before, .hero::after, .contact::before, .contact::after{
+    position:absolute; border-radius:50%; filter: blur(80px); pointer-events:none;
+  }
+  .orb{ opacity:.5; will-change: transform; }
+  .orb--1{ width:520px; height:520px; top:-120px; left:-140px; background: radial-gradient(circle at 30% 30%, #4FA8E8, transparent 70%); animation: drift1 22s ease-in-out infinite alternate; }
+  .orb--2{ width:460px; height:460px; top:38%; right:-160px; background: radial-gradient(circle at 60% 40%, #22D3EE, transparent 70%); animation: drift2 26s ease-in-out infinite alternate; }
+  .orb--3{ width:500px; height:500px; bottom:-160px; left:22%; background: radial-gradient(circle at 50% 50%, #8B7CFF, transparent 70%); opacity:.4; animation: drift3 30s ease-in-out infinite alternate; }
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .orb{ opacity:.32; } }
+  :root[data-theme="dark"] .orb{ opacity:.32; }
+  .hero::before, .hero::after, .contact::before, .contact::after{ content:""; z-index:0; opacity:.45; }
+  .hero::before{ width:420px; height:420px; top:-140px; right:8%; background: radial-gradient(circle, #22D3EE, transparent 70%); animation: drift2 24s ease-in-out infinite alternate; }
+  .hero::after{ width:380px; height:380px; bottom:-160px; left:-80px; background: radial-gradient(circle, #6D5CFF, transparent 70%); animation: drift1 28s ease-in-out infinite alternate; }
+  .contact{ position:relative; overflow:hidden; }
+  .contact::before{ width:400px; height:400px; top:-120px; left:12%; background: radial-gradient(circle, #6D5CFF, transparent 70%); animation: drift3 26s ease-in-out infinite alternate; }
+  .contact::after{ width:420px; height:420px; bottom:-180px; right:-60px; background: radial-gradient(circle, #22D3EE, transparent 70%); animation: drift1 30s ease-in-out infinite alternate; }
+  .hero .wrap, .contact .wrap{ position:relative; z-index:1; }
+  @keyframes drift1{ to{ transform: translate(80px, 60px) scale(1.12); } }
+  @keyframes drift2{ to{ transform: translate(-90px, 50px) scale(0.92); } }
+  @keyframes drift3{ to{ transform: translate(60px, -70px) scale(1.1); } }
+  @media (prefers-reduced-motion: reduce){ .orb, .hero::before, .hero::after, .contact::before, .contact::after{ animation:none; } }
+
+  /* ---------- Témoignages ---------- */
+  .testimonials__intro{ margin-top: 16px; color: var(--ink-soft); max-width: 60ch; }
+  .testimonials__grid{ margin-top: 44px; display:grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .testimonial{
+    margin:0; padding: 28px 26px; background: color-mix(in srgb, var(--surface) 78%, transparent);
+    border:1px solid var(--rule); border-radius: 6px; backdrop-filter: blur(10px);
+    display:flex; flex-direction:column; gap:20px;
+  }
+  .testimonial blockquote{ margin:0; font-style: italic; }
+  .testimonial blockquote::before{ content:"\201C"; display:block; font-family: var(--font-display); font-size: 2.6rem; line-height:.6; color: var(--blueprint); margin-bottom: 10px; }
+  .testimonial__who{ display:flex; align-items:center; gap:12px; margin-top:auto; }
+  .testimonial__avatar{ width:40px; height:40px; border-radius:50%; flex:none; display:flex; align-items:center; justify-content:center; font-family: var(--font-display); font-weight:600; font-size:.9rem; color:#fff; background: linear-gradient(135deg, var(--blueprint), var(--accent)); }
+  .testimonial__name{ font-family: var(--font-display); font-weight:600; font-size:.95rem; display:block; }
+  .testimonial__role{ font-size:.82rem; color: var(--ink-soft); }
+  .testimonials__note{ margin-top: 22px; font-size: .82rem; color: var(--ink-soft); }
+  @media (max-width: 900px){ .testimonials__grid{ grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 520px){
+    .testimonials__grid{ gap: 12px; }
+    .testimonial{ padding: 18px 14px; gap: 14px; font-size: .88rem; line-height:1.5; }
+    .testimonial__who{ gap:8px; }
+    .testimonial__avatar{ width:32px; height:32px; font-size:.75rem; }
+    .testimonial__name{ font-size:.85rem; }
+    .testimonial__role{ font-size:.74rem; line-height:1.3; display:block; }
+  }
+
+  /* ---------- Dynamisme : apparition au scroll ---------- */
+  .reveal{ opacity:0; transform: translateY(20px); transition: opacity .65s ease, transform .65s cubic-bezier(.2,.7,.2,1); }
+  .reveal.is-visible{ opacity:1; transform:none; }
+  @media (prefers-reduced-motion: reduce){ .reveal{ opacity:1; transform:none; transition:none; } }
+
+  /* ---------- Survols dynamiques ---------- */
+  .nav__links a{ position:relative; }
+  .nav__links a::after{ content:""; position:absolute; left:0; right:100%; bottom:-4px; height:1.5px; background: var(--accent); transition: right .22s ease; }
+  .nav__links a:hover::after{ right:0; }
+
+  .advantage{ transition: background-color .2s ease; }
+  .advantage:hover{ background: color-mix(in srgb, var(--accent) 7%, transparent); }
+
+  .project{ transition: background-color .2s ease; }
+  .project:hover{ background: color-mix(in srgb, var(--accent) 4%, transparent); }
+  .project__art{ transition: border-color .2s ease, box-shadow .2s ease; }
+  .project:hover .project__art{ border-color: var(--accent); box-shadow: 0 10px 30px -14px color-mix(in srgb, var(--accent) 70%, transparent); }
+  .project__title{ transition: color .2s ease; }
+  .project:hover .project__title{ color: var(--accent); }
+
+  .skills__group li{ transition: color .15s ease, border-color .15s ease, padding-left .15s ease; }
+  .skills__group li:hover{ color: var(--accent); border-color: var(--accent); padding-left: 6px; }
+
+  .hero .btn--primary{ transition: transform .15s ease, box-shadow .2s ease; }
+  .hero .btn--primary:hover{ transform: translateY(-2px); box-shadow: 0 10px 34px -10px color-mix(in srgb, var(--band-accent) 60%, transparent); }
+
+  .hero__avatar{ overflow: visible; }
+  .hero__avatar::before{
+    content:""; position:absolute; inset:-16px; border-radius:50%; z-index:-1;
+    background: radial-gradient(circle, color-mix(in srgb, var(--band-accent) 32%, transparent), transparent 72%);
+    animation: pulseGlow 3.6s ease-in-out infinite;
+  }
+  @keyframes pulseGlow{ 0%,100%{ opacity:.5; transform:scale(1);} 50%{ opacity:1; transform:scale(1.1);} }
+  @media (prefers-reduced-motion: reduce){ .hero__avatar::before{ animation:none; } }
+
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="nav wrap">
+    <a href="#top" class="nav__mark">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M3 21L21 3M3 3l7 7M21 21l-7-7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      HolyDev
+    </a>
+    <div class="nav__right">
+      <button class="theme-toggle" id="themeToggle" aria-label="Basculer le mode sombre">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.4M12 19.1v2.4M4.4 4.4l1.7 1.7M17.9 17.9l1.7 1.7M2.5 12h2.4M19.1 12h2.4M4.4 19.6l1.7-1.7M17.9 6.1l1.7-1.7"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5Z"/></svg>
+      </button>
+      <button class="nav__toggle" aria-label="Ouvrir le menu" aria-expanded="false" id="navToggle"><span></span></button>
+    </div>
+    <div class="nav__links" id="navLinks">
+      <a href="#apropos">À propos</a>
+      <a href="#avantages">Pourquoi moi</a>
+      <a href="#competences">Compétences</a>
+      <a href="#projets">Projets</a>
+      <a href="#temoignages">Témoignages</a>
+      <a href="#contact">Contact</a>
+      <span class="status"><span class="status__dot"></span>Disponible pour de nouveaux projets</span>
+    </div>
+  </nav>
+</header>
+
+<div class="orbs" aria-hidden="true"><span class="orb orb--1"></span><span class="orb orb--2"></span><span class="orb orb--3"></span></div>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero__frame">
+        <svg class="crosshair crosshair--tl" viewBox="0 0 20 20"><line x1="10" y1="0" x2="10" y2="20"/><line x1="0" y1="10" x2="20" y2="10"/></svg>
+        <svg class="crosshair crosshair--br" viewBox="0 0 20 20"><line x1="10" y1="0" x2="10" y2="20"/><line x1="0" y1="10" x2="20" y2="10"/></svg>
+        <p class="hero__eyebrow">Développeur Web — Apprenti</p>
+        <h1>Holy Miradi Kinguma,<br>je construis des outils qui tiennent la route.</h1>
+        <p class="hero__role">Étudiant en 2ᵉ année de Licence Informatique — Développement Web et Génie Logiciel, 2 ans d'expérience pratique.</p>
+        <p class="hero__lede">Je conçois des sites et applications web simples, propres et bien structurés. Actuellement en formation, je cherche à mettre mes compétences au service de premiers projets concrets — stages, missions courtes ou collaborations.</p>
+        <div class="hero__cta">
+          <a href="#projets" class="btn btn--primary">Voir mes projets</a>
+          <a href="#contact" class="btn btn--ghost">Me contacter</a>
+        </div>
+      </div>
+      <div class="hero__photo">
+        <div class="hero__avatar">
+          HMK
+          <span class="hero__avatar-badge" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8a2 2 0 0 1 2-2h1.2l.9-1.4A2 2 0 0 1 9.8 3.6h4.4a2 2 0 0 1 1.7 1L16.8 6H18a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8Z"/><circle cx="12" cy="13" r="3.3"/></svg>
+          </span>
+        </div>
+        <p class="hero__photo-hint">Emplacement pour ta photo de profil — envoie-la moi et je l'intègre ici.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- À PROPOS -->
+  <section id="apropos">
+    <div class="wrap">
+      <div class="tick-rule"></div>
+      <div class="about">
+        <div>
+          <h2>Qui je suis</h2>
+          <p class="prose">Je m'appelle Holy Miradi Kinguma, développeur web en formation. Je suis actuellement en 2ᵉ année de Licence Informatique, parcours Développement Web et Génie Logiciel, et je pratique le développement depuis environ 2 ans — d'abord en autodidacte, puis dans le cadre de mes études.</p>
+          <p class="prose">J'aime comprendre comment un site ou une application fonctionne de bout en bout : de la structure d'une page à la logique qui la fait fonctionner derrière. Je suis encore en apprentissage, mais c'est justement ce qui me rend rigoureux et curieux sur chaque projet que j'aborde.</p>
+        </div>
+        <dl class="about__facts">
+          <div class="about__fact"><dt>Expérience</dt><dd>2 ans</dd></div>
+          <div class="about__fact"><dt>Statut</dt><dd>Étudiant / Apprenti</dd></div>
+          <div class="about__fact"><dt>Formation</dt><dd>Licence 2 — Info. & Génie Logiciel</dd></div>
+          <div class="about__fact"><dt>Domaines</dt><dd>Développement Web</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- AVANTAGES / VALEUR -->
+  <section id="avantages">
+    <div class="wrap">
+      <div class="tick-rule"></div>
+      <h2>Ce que vous gagnez à travailler avec moi</h2>
+      <p class="advantages__intro">Un développeur en formation, disponible, motivé et impliqué à chaque étape — avec la fraîcheur de quelqu'un qui apprend encore et le sérieux de quelqu'un qui veut bien faire.</p>
+      <div class="advantages__grid">
+        <div class="advantage">
+          <p class="advantage__num">01</p>
+          <h3>Rigueur et envie d'apprendre</h3>
+          <p>Chaque projet est une occasion de progresser : je documente mon code, je pose les bonnes questions et je ne laisse rien au hasard.</p>
+        </div>
+        <div class="advantage">
+          <p class="advantage__num">02</p>
+          <h3>Disponibilité et réactivité</h3>
+          <p>Pas de portefeuille de gros clients à jongler : je peux me consacrer pleinement à votre projet et répondre rapidement.</p>
+        </div>
+        <div class="advantage">
+          <p class="advantage__num">03</p>
+          <h3>Communication claire</h3>
+          <p>J'explique simplement ce que je fais et pourquoi, sans jargon inutile, pour que vous restiez toujours au courant de l'avancement.</p>
+        </div>
+        <div class="advantage">
+          <p class="advantage__num">04</p>
+          <h3>Des tarifs adaptés</h3>
+          <p>En tant que développeur en début de parcours, je propose des tarifs accessibles pour les petits projets et premières collaborations.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPÉTENCES -->
+  <section id="competences">
+    <div class="wrap">
+      <div class="tick-rule"></div>
+      <h2>Compétences</h2>
+      <div class="skills__grid">
+        <div class="skills__group">
+          <h3>Langages & frameworks</h3>
+          <ul>
+            <li>HTML5 & CSS3</li>
+            <li>JavaScript (ES6+)</li>
+            <li>React (notions)</li>
+            <li>Python — bases algorithmiques</li>
+          </ul>
+        </div>
+        <div class="skills__group">
+          <h3>Outils & environnement</h3>
+          <ul>
+            <li>Git & GitHub</li>
+            <li>Node.js (notions)</li>
+            <li>SQL / MySQL</li>
+            <li>VS Code / Linux (bases)</li>
+          </ul>
+        </div>
+        <div class="skills__group">
+          <h3>Autres compétences</h3>
+          <ul>
+            <li>Résolution de problèmes algorithmiques</li>
+            <li>Travail en équipe / mode projet</li>
+            <li>Anglais technique (lecture doc.)</li>
+            <li>Autoformation continue</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJETS -->
+  <section id="projets">
+    <div class="wrap">
+      <div class="tick-rule"></div>
+      <h2>Projets</h2>
+      <p class="projects__intro">Étant encore en formation, voici des exemples de projets représentatifs de mon niveau actuel — académiques et personnels. Je les remplacerai au fil de l'eau par mes vrais projets et missions.</p>
+      <div class="projects__list">
+
+        <article class="project">
+          <div class="project__art">
+            <svg viewBox="0 0 160 120" fill="none" stroke-width="1.2">
+              <rect x="10" y="14" width="140" height="92" rx="2"/>
+              <line x1="10" y1="34" x2="150" y2="34"/>
+              <circle cx="22" cy="24" r="2.5"/><circle cx="32" cy="24" r="2.5"/><circle cx="42" cy="24" r="2.5"/>
+              <rect x="22" y="46" width="52" height="46"/>
+              <line x1="86" y1="46" x2="138" y2="46"/><line x1="86" y1="58" x2="138" y2="58"/><line x1="86" y1="70" x2="118" y2="70"/>
+            </svg>
+          </div>
+          <div>
+            <h3 class="project__title">Gestionnaire de tâches (To-Do App)</h3>
+            <p class="project__desc">Application web personnelle pour organiser des tâches par priorité et par statut. Objectif : mettre en pratique la manipulation du DOM et la persistance des données côté client.</p>
+            <p class="project__meta">HTML / CSS / JavaScript</p>
+            <a href="#" class="project__link">Voir le projet →</a>
+          </div>
+        </article>
+
+        <article class="project">
+          <div class="project__art">
+            <svg viewBox="0 0 160 120" fill="none" stroke-width="1.2">
+              <circle cx="80" cy="60" r="8"/>
+              <circle cx="30" cy="30" r="5"/><circle cx="130" cy="28" r="5"/>
+              <circle cx="26" cy="92" r="5"/><circle cx="132" cy="94" r="5"/>
+              <line x1="80" y1="60" x2="30" y2="30"/><line x1="80" y1="60" x2="130" y2="28"/>
+              <line x1="80" y1="60" x2="26" y2="92"/><line x1="80" y1="60" x2="132" y2="94"/>
+            </svg>
+          </div>
+          <div>
+            <h3 class="project__title">API de gestion de bibliothèque</h3>
+            <p class="project__desc">Projet académique : une API REST pour gérer un catalogue de livres (emprunts, retours, disponibilité), avec une base de données relationnelle en support.</p>
+            <p class="project__meta">Python / SQL</p>
+            <a href="#" class="project__link">Voir le projet →</a>
+          </div>
+        </article>
+
+        <article class="project">
+          <div class="project__art">
+            <svg viewBox="0 0 160 120" fill="none" stroke-width="1.2">
+              <rect x="55" y="10" width="50" height="100" rx="6"/>
+              <line x1="65" y1="24" x2="95" y2="24"/><line x1="65" y1="36" x2="95" y2="36"/>
+              <rect x="65" y="50" width="30" height="20"/>
+              <line x1="65" y1="86" x2="95" y2="86"/>
+            </svg>
+          </div>
+          <div>
+            <h3 class="project__title">Site vitrine pour une petite structure</h3>
+            <p class="project__desc">Maquette de site vitrine responsive (accueil, services, contact), pensée pour une petite structure locale qui souhaite une présence en ligne simple et claire.</p>
+            <p class="project__meta">HTML / CSS / Responsive</p>
+            <a href="#" class="project__link">Voir le projet →</a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- TÉMOIGNAGES -->
+  <section id="temoignages">
+    <div class="wrap">
+      <div class="tick-rule"></div>
+      <h2>Témoignages</h2>
+      <p class="testimonials__intro">Ce que disent celles et ceux avec qui j'ai travaillé.</p>
+      <div class="testimonials__grid">
+        <figure class="testimonial">
+          <blockquote>Holy a transformé notre idée en un site clair et rapide à prendre en main. Il pose les bonnes questions et livre proprement.</blockquote>
+          <figcaption class="testimonial__who"><span class="testimonial__avatar">AK</span><span><span class="testimonial__name">Amina K.</span><span class="testimonial__role">Gérante d'une boutique locale</span></span></figcaption>
+        </figure>
+        <figure class="testimonial">
+          <blockquote>Très sérieux pour un étudiant : code lisible, délais tenus, et une vraie curiosité pour apprendre vite. Je recommande.</blockquote>
+          <figcaption class="testimonial__who"><span class="testimonial__avatar">JR</span><span><span class="testimonial__name">Julien R.</span><span class="testimonial__role">Chargé de cours, Licence Informatique</span></span></figcaption>
+        </figure>
+        <figure class="testimonial">
+          <blockquote>Il a su expliquer ses choix techniques simplement. Travailler en binôme avec lui a été un vrai plaisir.</blockquote>
+          <figcaption class="testimonial__who"><span class="testimonial__avatar">SM</span><span><span class="testimonial__name">Sarah M.</span><span class="testimonial__role">Camarade de promotion</span></span></figcaption>
+        </figure>
+        <figure class="testimonial">
+          <blockquote>Maquette livrée en avance, adaptée au téléphone dès le départ. Nos clients l'ont remarqué tout de suite.</blockquote>
+          <figcaption class="testimonial__who"><span class="testimonial__avatar">PL</span><span><span class="testimonial__name">Patrick L.</span><span class="testimonial__role">Responsable d'une petite association</span></span></figcaption>
+        </figure>
+        <figure class="testimonial">
+          <blockquote>Il ne se contente pas d'exécuter : il propose des améliorations et les justifie. C'est rare à ce stade.</blockquote>
+          <figcaption class="testimonial__who"><span class="testimonial__avatar">NB</span><span><span class="testimonial__name">Nadia B.</span><span class="testimonial__role">Tutrice de projet</span></span></figcaption>
+        </figure>
+        <figure class="testimonial">
+          <blockquote>Communication fluide et retours rapides. J'ai toujours su où en était le travail, sans avoir à relancer.</blockquote>
+          <figcaption class="testimonial__who"><span class="testimonial__avatar">ET</span><span><span class="testimonial__name">Éric T.</span><span class="testimonial__role">Artisan, client de test</span></span></figcaption>
+        </figure>
+      </div>
+      <p class="testimonials__note">Exemples fictifs, à remplacer par de vrais retours dès que j'en aurai.</p>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="contact">
+    <div class="wrap">
+      <div class="tick-rule"></div>
+      <h2>Discutons de votre projet</h2>
+      <p>Un projet, une question, ou juste envie d'échanger sur le développement web ? Écris-moi, je réponds rapidement.</p>
+      <a href="mailto:dasilvamiradi10@gmail.com" class="contact__email">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg>
+        dasilvamiradi10@gmail.com
+      </a>
+      <div class="contact__links">
+        <a href="https://wa.me/243981186474" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.65 15L2 22l5.14-1.35A10 10 0 1 0 12 2Zm5.87 14.22c-.25.7-1.44 1.34-1.98 1.4-.5.06-1.14.09-1.84-.12-.42-.13-.97-.31-1.68-.61-2.96-1.28-4.9-4.25-5.05-4.45-.15-.2-1.2-1.6-1.2-3.05s.75-2.16 1.02-2.46c.27-.3.58-.37.78-.37h.56c.18 0 .42-.03.65.5.25.58.83 2 .9 2.15.07.15.12.33.02.53-.1.2-.15.33-.3.5-.15.18-.32.4-.45.53-.15.15-.31.32-.13.62.18.3.8 1.32 1.72 2.14 1.18 1.05 2.18 1.38 2.48 1.53.3.15.47.13.65-.08.18-.2.75-.87.95-1.17.2-.3.4-.25.68-.15.28.1 1.78.84 2.08 1 .3.15.5.22.58.35.08.13.08.75-.17 1.44Z"/></svg>WhatsApp</a>
+        <a href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.77-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.44 2.89h-2.34v6.99A10 10 0 0 0 22 12Z"/></svg>Facebook</a>
+        <a href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"/></svg>Instagram</a>
+        <a href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.58 2 12.19c0 4.49 2.87 8.3 6.84 9.64.5.1.68-.22.68-.49 0-.24-.01-1.04-.01-1.88-2.78.61-3.37-1.21-3.37-1.21-.45-1.18-1.11-1.5-1.11-1.5-.9-.63.07-.62.07-.62 1 .07 1.53 1.05 1.53 1.05.89 1.55 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.06 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.32.1-2.75 0 0 .84-.27 2.75 1.05a9.3 9.3 0 0 1 5 0c1.91-1.32 2.75-1.05 2.75-1.05.55 1.43.2 2.49.1 2.75.64.72 1.03 1.63 1.03 2.75 0 3.93-2.35 4.79-4.58 5.05.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.6.69.49A10.02 10.02 0 0 0 22 12.19C22 6.58 17.52 2 12 2Z"/></svg>GitHub</a>
+        <a href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 2H3.55A1.55 1.55 0 0 0 2 3.55v16.9A1.55 1.55 0 0 0 3.55 22h16.9A1.55 1.55 0 0 0 22 20.45V3.55A1.55 1.55 0 0 0 20.45 2ZM8.1 18.7H5.4V9.4h2.7v9.3ZM6.75 8.15a1.57 1.57 0 1 1 0-3.14 1.57 1.57 0 0 1 0 3.14ZM18.7 18.7h-2.69v-4.52c0-1.08-.02-2.46-1.5-2.46-1.5 0-1.73 1.17-1.73 2.38v4.6H10.1V9.4h2.58v1.27h.04c.36-.68 1.24-1.4 2.55-1.4 2.73 0 3.23 1.79 3.23 4.13v5.3Z"/></svg>LinkedIn</a>
+        <a href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="M9 15h6M9 18h4"/></svg>CV (PDF)</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap footer__row">
+    <span>© <span id="year"></span> Holy Miradi Kinguma — HolyDev</span>
+    <span>Conçu et développé sur mesure</span>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Apparition au scroll
+  (function(){
+    var targets = document.querySelectorAll(
+      '#apropos .about > div, #apropos .about__facts, #avantages h2, #avantages .advantages__intro, #avantages .advantage, ' +
+      '#competences h2, #competences .skills__group, #projets h2, #projets .projects__intro, #projets .project, ' +
+      '#temoignages h2, #temoignages .testimonials__intro, #temoignages .testimonial, #temoignages .testimonials__note, #contact h2, #contact p, #contact .contact__email, #contact .contact__links'
+    );
+    if (!('IntersectionObserver' in window)) { return; }
+    targets.forEach(function(el){ el.classList.add('reveal'); });
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting){
+          entry.target.classList.add('is-visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    targets.forEach(function(el){ io.observe(el); });
+  })();
+
+  // Mode sombre : bouton + mémorisation du choix
+  (function(){
+    var root = document.documentElement;
+    var themeBtn = document.getElementById('themeToggle');
+    var saved = null;
+    try { saved = localStorage.getItem('holydev-theme'); } catch(e){}
+    if (saved === 'light' || saved === 'dark') root.setAttribute('data-theme', saved);
+
+    themeBtn.addEventListener('click', function(){
+      var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      var current = root.getAttribute('data-theme') || (prefersDark ? 'dark' : 'light');
+      var next = current === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      try { localStorage.setItem('holydev-theme', next); } catch(e){}
+    });
+  })();
+
+  var toggle = document.getElementById('navToggle');
+  var links = document.getElementById('navLinks');
+  toggle.addEventListener('click', function(){
+    var open = links.classList.toggle('is-open');
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  links.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', function(){ links.classList.remove('is-open'); toggle.setAttribute('aria-expanded','false'); });
+  });
+</script>
+
+</body>
+</html>
